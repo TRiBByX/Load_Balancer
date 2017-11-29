@@ -1,4 +1,0 @@
-.DS_Store
-cred.json
-.pyc
-django
