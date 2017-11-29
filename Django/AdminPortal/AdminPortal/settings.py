@@ -55,7 +55,9 @@ ROOT_URLCONF = 'AdminPortal.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            'AdminPortal/static/templates/AdminPortal',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
