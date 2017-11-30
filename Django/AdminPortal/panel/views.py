@@ -11,4 +11,4 @@ class Index(View):
 
     def get(self, request):
         """Get method for the index."""
-        return render(request, 'panel/dashboard.html')
+        return(render(request, 'panel/dashboard.html'))
