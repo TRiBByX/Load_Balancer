@@ -11,4 +11,12 @@ class Index(View):
 
     def get(self, request):
         """Get method for the index."""
-        return render(request, 'panel/dashboard.html')
+        return render(request, 'AdminPortal/main.html')
+
+
+class Login(View):
+    """Login class."""
+
+    def get(self, request):
+        """Return the login prompt."""
+        return render(request, 'AdminPortal/login.html')
