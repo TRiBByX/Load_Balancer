@@ -2,30 +2,30 @@
 from oauth2client.client import GoogleCredentials
 from googleapiclient.discovery import build
 
-
-def start_vm():
+def start_vm(vm_model):
     credentials = GoogleCredentials.get_application_default()
     compute = build('compute', 'v1', credentials=credentials)
 
     # r = compute.instances().reset
+    try:
+        compute.instances().start(project=vm_model.project,
+                                  zone=vm_model.zone,
+                                  instance=vm_model.instance).execute()
 
-    print(compute.instances().start(project='upbeat-medley-184111',
-                                    zone='us-central1-f',
-                                    instance='instance-1').execute())
-
-    # print(compute.instances().list(project='upbeat-medley-184111',
-    #                                zone='us-central1-f').execute())
-    # r = requests.post('https://www.googleapis.com/compute/v1/projects/upbeat-medley-184111/zones/us-central1-f/instances/instance-1/stop?access_token={0}'.format(compute))
-
-    pass
+        data = compute.instances().get(project=vm_model.project,
+                                       zone=vm_model.zone,
+                                       instance=vm_model.instance).execute()
+    except Exception as e:
+        raise e
+    print('It worked!')
+    vm_model.ip = data.get('networkInterfaces')[0].get('accessConfigs')[0].get('natIP')
+    print(vm_model.ip)
 
 
 def stop_vm():
+    print(vm.project)
     pass
 
 
 def get_vm_ips():
     pass
-
-
-start_vm()
