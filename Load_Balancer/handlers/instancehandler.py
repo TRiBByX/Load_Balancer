@@ -1,6 +1,8 @@
 from models import models
+from handlers import vmhandler
 import socket
 import threading
+import json
 
 
 def instanceLoop():
@@ -34,6 +36,9 @@ def tcpLoop():
 
                 # TODO: Build command structure underneath.
             if data.decode() == 'get':
-                c.send(str.encode('[getting...]'))
+                _dict = vmhandler.get_ip_dict()
+                _dict = json.dumps(_dict)
+                print(_dict)
+                c.send(_dict)
             else:
                 c.send(str.encode('[Command not understood...]'))

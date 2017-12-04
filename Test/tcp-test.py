@@ -1,4 +1,5 @@
 import socket
+import ast
 
 s = socket.socket()
 host = socket.gethostname()
@@ -12,4 +13,4 @@ while True:
     s.send(z)
     # Halts
     print '[Waiting for response...]'
-    print s.recv(1024)
+    print type(ast.literal_eval(s.recv(1024)))

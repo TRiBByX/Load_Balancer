@@ -2,6 +2,9 @@
 from oauth2client.client import GoogleCredentials
 from googleapiclient.discovery import build
 
+dict_of_ips = {}
+
+
 def start_vm(vm_model):
     credentials = GoogleCredentials.get_application_default()
     compute = build('compute', 'v1', credentials=credentials)
@@ -36,22 +39,24 @@ def stop_vm(vm_model):
         raise e
 
 
-def get_vm_ips(project, zone, list_of_ips):
+def get_vm_ips(project, zone):
     credentials = GoogleCredentials.get_application_default()
     compute = build('compute', 'v1', credentials=credentials)
-    del list_of_ips[:]
+    dict_of_ips.clear()
     # r = compute.instances().reset
     try:
         ips = compute.instances().list(project=project, zone=zone)
         while ips is not None:
             response = ips.execute()
             for instance in response['items']:
-                list_of_ips.append(instance
-                                   .get('networkInterfaces')[0]
-                                   .get('accessConfigs')[0]
-                                   .get('natIP'))
+                dict_of_ips[instance.get('networkInterfaces')[0]
+                                    .get('accessConfigs')[0]
+                                    .get('natIP')] = instance.get('name')
             ips = compute.instances().list_next(previous_request=ips,
                                                 previous_response=response)
     except Exception as e:
         raise e
     pass
+
+def get_ip_dict():
+    return dict_of_ips
