@@ -4,30 +4,36 @@ import thread
 
 
 def instanceLoop():
-    """Docstring."""
-    while True:
-        tcpLoop()
+    """A loop that keeps the tcp client running."""
+    try:
+        while True:
+            tcpLoop()
+    except KeyboardInterrupt:
+        return None
 
 
 def tcpLoop():
-    """Docstring."""
-    try:
-        TCP_IP = '192.168.0.27'
-        TCP_PORT = 8080
-        BUFFER_SIZE = 20
+    """A TCP loop that handles incoming command calls."""
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    host = socket.gethostname()
+    port = 8888
+    print(host, port)
+    s.bind((host, port))
 
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.bind((TCP_IP, TCP_PORT))
-        s.listen(1)
+    s.listen(1)
+    c = None
 
-        conn, addr = s.accept()
-        print 'Connection Address: ', addr
+    while True:
+        if c is None:
+            print('[No connection established]')
+            c, addr = s.accept()
+            print('[Connection established with: {}]'.format(addr))
+        else:
+            print('[Waiting for command...]')
+            data = c.recv(1024)
 
-        while True:
-                data = conn.recv(BUFFER_SIZE)
-                if not data: break
-                print "Received data: ", data
-                conn.send(data)
-        conn.close()
-    except socket.error:
-        return None
+                # TODO: Build command structure underneath.
+            if data.decode() == 'get':
+                c.send(str.encode('[getting...]'))
+            else:
+                c.send(str.encode('[Command not understood...]'))
