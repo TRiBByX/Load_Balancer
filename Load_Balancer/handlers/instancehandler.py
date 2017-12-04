@@ -1,6 +1,6 @@
 from models import models
 import socket
-import thread
+import threading
 
 
 def instanceLoop():
@@ -21,12 +21,12 @@ def tcpLoop():
         s.listen(1)
 
         conn, addr = s.accept()
-        print 'Connection Address: ', addr
+        print('Connection Address: ', addr)
 
         while True:
                 data = conn.recv(BUFFER_SIZE)
                 if not data: break
-                print "Received data: ", data
+                print("Received data: ", data)
                 conn.send(data)
         conn.close()
     except socket.error:
