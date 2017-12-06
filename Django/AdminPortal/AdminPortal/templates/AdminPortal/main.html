@@ -14,20 +14,22 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-inverse">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <a class="navbar-brand" href="#">Admin Panel</a>
+        <div id="fullscreen_bg" class="fullscreen_bg"/>
+            <nav class="navbar navbar-inverse">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="#">Admin Panel</a>
+                </div>
+                <ul class="nav navbar-nav">
+                  <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                  <li><a href="#">Settings</a></li>
+                  <li><a href="#">Help</a></li>
+                </ul>
+            </nav>
+            <div>
+                {% block content %}
+                {% endblock %}
             </div>
-            <ul class="nav navbar-nav">
-              <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-              <li><a href="#">Settings</a></li>
-              <li><a href="#">Help</a></li>
-            </ul>
-        </nav>
-        <div>
-            {% block content %}
-            {% endblock %}
         </div>
     </body>
 </html>
