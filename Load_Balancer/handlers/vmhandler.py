@@ -47,8 +47,8 @@ def stop_vm(instance):
     try:
         a = dict_of_vms[instance]
         try:
-            compute.instances().stop(project=a['project:'],
-                                     zone=a['zone:'],
+            compute.instances().stop(project=a['project'],
+                                     zone=a['zone'],
                                      instance=instance).execute()
             print("VM stopped")
             del(dict_of_vms[instance])
@@ -76,8 +76,8 @@ def get_vm_data(project, zone):
                 data = instance.get('selfLink')
                 data = data.split("/")
                 dict_data = {}
-                dict_data['project:'] = data[6]
-                dict_data['zone:'] = data[8]
+                dict_data['project'] = data[6]
+                dict_data['zone'] = data[8]
                 dict_data['ip'] = (instance.get('networkInterfaces')[0]
                                            .get('accessConfigs')[0]
                                            .get('natIP'))
