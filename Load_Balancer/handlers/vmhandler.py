@@ -44,16 +44,18 @@ def stop_vm(instance):
     """
     credentials = GoogleCredentials.get_application_default()
     compute = build('compute', 'v1', credentials=credentials)
-    
     try:
-        compute.instances().stop(project=dict_of_vms[instance]['project:'],
-                                 zone=dict_of_vms[instance]['zone:'],
-                                 instance=instance).execute()
-        print("VM stopped")
-        del(dict_of_vms(instance))
-    except Exception as e:
-        raise e
-
+        a = dict_of_vms[instance]
+        try:
+            compute.instances().stop(project=a['project:'],
+                                     zone=a['zone:'],
+                                     instance=instance).execute()
+            print("VM stopped")
+            del(dict_of_vms[instance])
+        except Exception as e:
+            raise e
+    except Exception as ex:
+        return ex
 
 def get_vm_data(project, zone):
     """Populates dict of vm based on project and zone.
