@@ -8,7 +8,8 @@ dict_of_ips = {}
 
 
 def start_vm(vm_model):
-    """"Starts the VM based on the model given
+    """"Starts the VM based on the model given.
+
         args vm_model:
         project: vm project location
         zone: vm zone location
@@ -38,12 +39,13 @@ def start_vm(vm_model):
 
 
 def stop_vm(vm_model):
-    """"Stops the VM based on the model given
-        args: vm_model:
-            project: vm project location
-            zone: vm zone location
-            instance: name of the instance
-            ip: can be null
+    """"Stops the VM based on the model given.
+
+    args: vm_model:
+    project: vm project location
+    zone: vm zone location
+    instance: name of the instance
+    ip: can be null
     """
     credentials = GoogleCredentials.get_application_default()
     compute = build('compute', 'v1', credentials=credentials)
@@ -76,11 +78,11 @@ def get_vm_ips(project, zone):
             for instance in response['items']:
                 data = instance.get('selfLink')
                 data = data.split("/")
-                data_vm_model = str((models.VM_Model(data[6], data[8],
-                                    instance.get('name'),
-                                    instance.get('networkInterfaces')[0]
-                                            .get('accessConfigs')[0]
-                                            .get('natIP'))))                                            
+                data_vm_model = (models.VM_Model(data[6], data[8],
+                                 instance.get('name'),
+                                 instance.get('networkInterfaces')[0]
+                                         .get('accessConfigs')[0]
+                                         .get('natIP')))                                         
                 dict_of_ips[instance.get('name')] = data_vm_model
             ips = compute.instances().list_next(previous_request=ips,
                                                 previous_response=response)
