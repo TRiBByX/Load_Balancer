@@ -4,11 +4,6 @@ from googleapiclient.discovery import build
 
 dict_of_ips = {}
 
-<<<<<<< HEAD
-list_vm_models = []
-=======
->>>>>>> fd6179ebf11a2cdb3064962269fe5d3d4a6ba6ea
-
 def start_vm(vm_model):
     """"Starts the VM based on the model given
         args vm_model:
