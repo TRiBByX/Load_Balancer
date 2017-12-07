@@ -5,7 +5,6 @@ from threading import Thread
 from handlers import networkhandler
 import time
 
-global vm_ips
 
 def main():
 
@@ -23,3 +22,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
