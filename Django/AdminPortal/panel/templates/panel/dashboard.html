@@ -2,6 +2,13 @@
 
 {% block content %}
 
-	<p>{{text}}</p>
+	<p style="color:white;">{{servers}}</p>
+
+	<div>
+		<form method='post'>
+			{% csrf_token %}
+			<input type='submit'></form>
+		</form>
+	</div>
 
 {% endblock %}
