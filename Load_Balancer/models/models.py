@@ -6,3 +6,7 @@ class VM_Model(object):
         self.zone = zone
         self.instance = instance
         self.ip = ip
+
+    def __str__(self):
+        return "Project: {} - Zone: {} - Instance: {} - IP: {}".format(
+                        self.project, self.zone, self.instance, self.ip)
