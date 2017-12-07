@@ -50,6 +50,7 @@ def stop_vm(instance):
                                  zone=dict_of_vms[instance]['zone:'],
                                  instance=instance).execute()
         print("VM stopped")
+        del(dict_of_vms(instance))
     except Exception as e:
         raise e
 
