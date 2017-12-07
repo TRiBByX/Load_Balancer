@@ -11,7 +11,7 @@ def main():
                          'instance-1', None)
 
     vmhandler.get_vm_ips(vm.project, vm.zone)
-    print(vmhandler.get_ip_dict())
+    print(vmhandler.get_list_vmmodels())
 
 
 if __name__ == '__main__':
