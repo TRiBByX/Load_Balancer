@@ -1,14 +1,16 @@
 # import requests
 from oauth2client.client import GoogleCredentials
 from googleapiclient.discovery import build
-from models import models
 
+dict_of_ips = {}
 
+<<<<<<< HEAD
 list_vm_models = []
+=======
+>>>>>>> fd6179ebf11a2cdb3064962269fe5d3d4a6ba6ea
 
 def start_vm(vm_model):
-    """"Starts the VM based on the model given.
-
+    """"Starts the VM based on the model given
         args vm_model:
         project: vm project location
         zone: vm zone location
@@ -38,13 +40,12 @@ def start_vm(vm_model):
 
 
 def stop_vm(vm_model):
-    """"Stops the VM based on the model given.
-
-    args: vm_model:
-    project: vm project location
-    zone: vm zone location
-    instance: name of the instance
-    ip: can be null
+    """"Stops the VM based on the model given
+        args: vm_model:
+            project: vm project location
+            zone: vm zone location
+            instance: name of the instance
+            ip: can be null
     """
     credentials = GoogleCredentials.get_application_default()
     compute = build('compute', 'v1', credentials=credentials)
@@ -59,8 +60,8 @@ def stop_vm(vm_model):
         raise e
 
 
-def get_vm_ips(project, zone):
-    """Populates dict of ips based on project and zone.
+def get_vm_data(project, zone):
+    """Populates dict of vm based on project and zone.
 
         args:
             project: the vm project location
@@ -68,7 +69,7 @@ def get_vm_ips(project, zone):
     """
     credentials = GoogleCredentials.get_application_default()
     compute = build('compute', 'v1', credentials=credentials)
-    # dict_of_ips.clear()
+    dict_of_ips.clear()
     # r = compute.instances().reset
     try:
         ips = compute.instances().list(project=project, zone=zone)
@@ -77,22 +78,24 @@ def get_vm_ips(project, zone):
             for instance in response['items']:
                 data = instance.get('selfLink')
                 data = data.split("/")
-                data_vm_model = (models.VM_Model(data[6], data[8],
-                                 instance.get('name'),
-                                 instance.get('networkInterfaces')[0]
-                                         .get('accessConfigs')[0]
-                                         .get('natIP')))
-                list_vm_models.append(data_vm_model)
+                dict_data = {}
+                dict_data['project:'] = data[6]
+                dict_data['zone:'] = data[8]
+                dict_data['ip'] = (instance.get('networkInterfaces')[0]
+                                           .get('accessConfigs')[0]
+                                           .get('natIP'))
+
+                dict_of_ips[instance.get('name')] = dict_data
             ips = compute.instances().list_next(previous_request=ips,
                                                 previous_response=response)
     except Exception as e:
         raise e
     pass
 
-def get_list_vmmodels():
+def get_dict():
     """Returns dict of ips.
 
     Use get_vm_ips to populate it.
     """
 
-    return list_vm_models
+    return dict_of_ips

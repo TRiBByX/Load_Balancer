@@ -19,7 +19,7 @@ class Index(View):
         port = 8888
         s.connect((host, port))
         s.send('get')
-        context = {'servers': ast.literal_eval(s.recv(1024))}
+        context = {'objs': s.recv(2048)}
         s.close()
         return(render(request, 'panel/dashboard.html', context=context))
 
@@ -32,5 +32,4 @@ class Index(View):
         s.send('post')
         s.close()
         return HttpResponse('hello darkness my old friend')
-
 
