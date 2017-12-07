@@ -4,8 +4,7 @@ from googleapiclient.discovery import build
 from models import models
 
 
-dict_of_ips = {}
-
+list_vm_models = ()
 
 def start_vm(vm_model):
     """"Starts the VM based on the model given.
@@ -69,7 +68,7 @@ def get_vm_ips(project, zone):
     """
     credentials = GoogleCredentials.get_application_default()
     compute = build('compute', 'v1', credentials=credentials)
-    dict_of_ips.clear()
+    # dict_of_ips.clear()
     # r = compute.instances().reset
     try:
         ips = compute.instances().list(project=project, zone=zone)
@@ -82,18 +81,18 @@ def get_vm_ips(project, zone):
                                  instance.get('name'),
                                  instance.get('networkInterfaces')[0]
                                          .get('accessConfigs')[0]
-                                         .get('natIP')))                                         
-                dict_of_ips[instance.get('name')] = data_vm_model
+                                         .get('natIP')))
+                list_vm_models.append(data_vm_model)
             ips = compute.instances().list_next(previous_request=ips,
                                                 previous_response=response)
     except Exception as e:
         raise e
     pass
 
-def get_ip_dict():
+def get_list_vmmodels():
     """Returns dict of ips.
 
     Use get_vm_ips to populate it.
     """
 
-    return dict_of_ips
+    return list_vm_models
