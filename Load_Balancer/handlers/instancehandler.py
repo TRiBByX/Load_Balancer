@@ -40,9 +40,15 @@ def tcpLoop():
             data = data.split(' ')
             if data[0] == 'get':
                 print 'I GOTS IT!'
-                _dict = vmhandler.get_ip_dict()
-                _dict = json.dumps(_dict)
-                print(_dict)
-                c.send(_dict)
+                data = vmhandler.get_dict()
+                print(data)
+                jsondata = json.dumps(data)
+                c.sendall(jsondata)
             elif data[0] == 'post':
+                if data[1] == 'shutdown':
+                    pass
+                elif data[1] == 'start':
+                    pass
+
                 print 'post'
+

@@ -4,7 +4,7 @@ from googleapiclient.discovery import build
 from models import models
 
 
-list_vm_models = ()
+list_vm_models = []
 
 def start_vm(vm_model):
     """"Starts the VM based on the model given.
