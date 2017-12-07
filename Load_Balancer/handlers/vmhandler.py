@@ -49,9 +49,16 @@ def get_vm_ips(project, zone):
         while ips is not None:
             response = ips.execute()
             for instance in response['items']:
-                dict_of_ips[instance.get('networkInterfaces')[0]
-                                    .get('accessConfigs')[0]
-                                    .get('natIP')] = instance.get('name')
+                data = instance.get('selfLink')
+                data = data.split("/")
+                dict_data = {}
+                dict_data['project:'] = data[6]
+                dict_data['zone:'] = data[8]
+                dict_data['ip'] = (instance.get('networkInterfaces')[0]
+                                           .get('accessConfigs')[0]
+                                           .get('natIP'))
+
+                dict_of_ips[instance.get('name')] = dict_data
             ips = compute.instances().list_next(previous_request=ips,
                                                 previous_response=response)
     except Exception as e:
