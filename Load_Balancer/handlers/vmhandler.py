@@ -2,7 +2,7 @@
 from oauth2client.client import GoogleCredentials
 from googleapiclient.discovery import build
 
-dict_of_ips = {}
+dict_of_vms = {}
 
 def start_vm(vm_model):
     """"Starts the VM based on the model given
@@ -34,7 +34,7 @@ def start_vm(vm_model):
     print(vm_model.ip)
 
 
-def stop_vm(vm_model):
+def stop_vm(instance):
     """"Stops the VM based on the model given
         args: vm_model:
             project: vm project location
@@ -44,12 +44,11 @@ def stop_vm(vm_model):
     """
     credentials = GoogleCredentials.get_application_default()
     compute = build('compute', 'v1', credentials=credentials)
-
-    # r = compute.instances().reset
+    
     try:
-        compute.instances().stop(project=vm_model.project,
-                                 zone=vm_model.zone,
-                                 instance=vm_model.instance).execute()
+        compute.instances().stop(project=dict_of_vms[instance]['project:'],
+                                 zone=dict_of_vms[instance]['zone:'],
+                                 instance=instance).execute()
         print("VM stopped")
     except Exception as e:
         raise e
@@ -64,7 +63,7 @@ def get_vm_data(project, zone):
     """
     credentials = GoogleCredentials.get_application_default()
     compute = build('compute', 'v1', credentials=credentials)
-    dict_of_ips.clear()
+    dict_of_vms.clear()
     # r = compute.instances().reset
     try:
         ips = compute.instances().list(project=project, zone=zone)
@@ -80,7 +79,7 @@ def get_vm_data(project, zone):
                                            .get('accessConfigs')[0]
                                            .get('natIP'))
 
-                dict_of_ips[instance.get('name')] = dict_data
+                dict_of_vms[instance.get('name')] = dict_data
             ips = compute.instances().list_next(previous_request=ips,
                                                 previous_response=response)
     except Exception as e:
@@ -93,4 +92,4 @@ def get_dict():
     Use get_vm_ips to populate it.
     """
 
-    return dict_of_ips
+    return dict_of_vms
