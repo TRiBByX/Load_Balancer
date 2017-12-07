@@ -46,7 +46,7 @@ def tcpLoop():
                 c.sendall(jsondata)
             elif data[0] == 'post':
                 if data[1] == 'shutdown':
-                    pass
+                    vmhandler.stop_vm(data[2])
                 elif data[1] == 'start':
                     pass
 

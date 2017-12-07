@@ -29,7 +29,7 @@ class Index(View):
         host = socket.gethostname()
         port = 8888
         s.connect((host, port))
-        s.send('post')
+        s.send('post shutdown instance-2')
         s.close()
         return HttpResponse('hello darkness my old friend')
 
