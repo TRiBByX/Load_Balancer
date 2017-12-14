@@ -3,6 +3,7 @@ from handlers import vmhandler
 from handlers import instancehandler
 from threading import Thread
 from handlers import networkhandler
+import sys
 
 
 def main():
@@ -17,6 +18,10 @@ def main():
 
     tcp_thread.start()
     #network_thread.start()
+
+    if raw_input() == 'exit':
+        print('trying')
+        quit()
 
 
 

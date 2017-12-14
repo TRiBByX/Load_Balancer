@@ -4,11 +4,17 @@
 
 	<p style="color:white;">{{objs}}</p>
 
-	<div>
+	<div class="panel">
 		<form method='post'>
 			{% csrf_token %}
 			<input type='submit'></form>
 		</form>
+
+        <div class="checkbox">
+	        <label>
+	          <input type="checkbox" class="flat" checked="checked"> Checked
+	        </label>
+      	</div>
 	</div>
 
 {% endblock %}

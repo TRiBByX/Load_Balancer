@@ -7,11 +7,8 @@ import json
 
 def instanceLoop():
     """A loop that keeps the tcp client running."""
-    try:
-        while True:
-            tcpLoop()
-    except KeyboardInterrupt:
-        return None
+    while True:
+        tcpLoop()
 
 
 def tcpLoop():

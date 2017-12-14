@@ -25,6 +25,7 @@ class Index(View):
 
 
     def post(self, request):
+        """Post method for index."""
         s = socket.socket()
         host = socket.gethostname()
         port = 8888
