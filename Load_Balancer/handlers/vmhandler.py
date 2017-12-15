@@ -34,6 +34,37 @@ def start_vm(vm_model):
     print(vm_model.ip)
 
 
+def reset_vm(vm_model):
+    """"Starts the VM based on the model given
+        args vm_model:
+        project: vm project location
+        zone: vm zone location
+        instance: name of the instance
+        ip: can be null
+    """
+    
+    credentials = GoogleCredentials.get_application_default()
+    compute = build('compute', 'v1', credentials=credentials)
+
+    try:
+        compute.instances().restart(project=vm_model.project,
+                                  zone=vm_model.zone,
+                                  instance=vm_model.instance).execute()
+
+        data = compute.instances().get(project=vm_model.project,
+                                       zone=vm_model.zone,
+                                       instance=vm_model.instance).execute()
+
+    except Exception as e:
+        raise e
+        
+    print('It worked!')
+    vm_model.ip = (data.get('networkInterfaces')[0]
+                       .get('accessConfigs')[0]
+                       .get('natIP'))
+    print(vm_model.ip)
+
+
 def stop_vm(instance):
     """"Stops the VM based on the model given
         args: vm_model:

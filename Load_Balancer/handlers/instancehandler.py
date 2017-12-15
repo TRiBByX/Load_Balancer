@@ -45,7 +45,9 @@ def tcpLoop():
                 if data[1] == 'shutdown':
                     vmhandler.stop_vm(data[2])
                 elif data[1] == 'start':
-                    pass
+                    vmhandler.start_vm(data[2])
+                elif data[1] == 'reset':
+                    vmhandler.reset_vm(data[2])
 
                 print 'post'
 
