@@ -14,6 +14,7 @@ class networkhandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         # ip = '104.197.31.161'
 
         # print(self.path)
+        
         self.send_response(307)
         new_path = 'http://{}{}'.format('facebook.com', self.path)
         print(new_path)

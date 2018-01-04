@@ -6,7 +6,7 @@ from django.http import HttpResponse
 # from handlers import tcphandler
 
 import socket
-import ast
+# import ast
 
 
 class Index(View):
@@ -23,7 +23,6 @@ class Index(View):
         s.close()
         return(render(request, 'panel/dashboard.html', context=context))
 
-
     def post(self, request):
         """Post method for index."""
         s = socket.socket()
@@ -33,4 +32,3 @@ class Index(View):
         s.send('post shutdown instance-2')
         s.close()
         return HttpResponse('hello darkness my old friend')
-

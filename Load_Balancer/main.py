@@ -17,7 +17,7 @@ def main():
     network_thread = Thread(target=networkhandler.serve)
 
     tcp_thread.start()
-    #network_thread.start()
+    network_thread.start()
 
     if raw_input() == 'exit':
         print('trying')
