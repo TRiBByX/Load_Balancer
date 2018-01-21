@@ -30,6 +30,7 @@ def tcpLoop():
         else:
             print('[Waiting for command...]')
             data = c.recv(1024)
+            print(data)
             if not data:
                 break
 
