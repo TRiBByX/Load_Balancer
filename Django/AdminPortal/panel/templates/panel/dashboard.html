@@ -3,7 +3,7 @@
 {% block content %}
 
 	{% for key, value in objs.items %}
-		<p style="color:white;">{{key}}</p>
+		<input type="checkbox" value={{key}}></check><p style="color:white;">{{key}}</p>
 		<p style="color:white;">{{value}}</p>
 	{% endfor %}
 
@@ -12,7 +12,7 @@
 			{% csrf_token %}
 			<input type='submit'></form>
 		</form>
-
+		<input type="button" value="start" id="start">
         <div class="checkbox">
 	        <label>
 	          <input type="checkbox" class="flat" checked="checked"> Checked
@@ -21,3 +21,11 @@
 	</div>
 
 {% endblock %}
+
+<script>
+	$("#start").click(function(){
+		var v = $(":checkbox:chcked").val()
+		console.log(v)
+	})
+
+</script>
