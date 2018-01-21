@@ -6,6 +6,7 @@ from django.http import HttpResponse
 # from handlers import tcphandler
 
 import socket
+import json
 # import ast
 
 
@@ -19,7 +20,8 @@ class Index(View):
         port = 8888
         s.connect((host, port))
         s.send('get')
-        context = {'objs': s.recv(2048)}
+        data = json.loads(s.recv(2048))
+        context = {'objs': data}
         s.close()
         return(render(request, 'panel/dashboard.html', context=context))
 
@@ -29,6 +31,6 @@ class Index(View):
         host = socket.gethostname()
         port = 8888
         s.connect((host, port))
-        s.send('post shutdown instance-2')
+        s.send('post start instance-2')
         s.close()
         return HttpResponse('hello darkness my old friend')

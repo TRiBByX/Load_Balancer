@@ -2,7 +2,10 @@
 
 {% block content %}
 
-	<p style="color:white;">{{objs}}</p>
+	{% for key, value in objs.items %}
+		<p style="color:white;">{{key}}</p>
+		<p style="color:white;">{{value}}</p>
+	{% endfor %}
 
 	<div class="panel">
 		<form method='post'>

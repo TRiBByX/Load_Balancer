@@ -30,13 +30,13 @@ def tcpLoop():
         else:
             print('[Waiting for command...]')
             data = c.recv(1024)
-                # TODO: Build command structure underneath.
             if not data:
                 break
 
             data = data.split(' ')
             if data[0] == 'get':
                 print 'I GOTS IT!'
+                vmhandler.get_vm_data('upbeat-medley-184111', 'us-central1-f')
                 data = vmhandler.get_dict()
                 print(data)
                 jsondata = json.dumps(data)
@@ -52,4 +52,3 @@ def tcpLoop():
                 print 'post'
             else:
                 c.sendall('Not Understood')
-

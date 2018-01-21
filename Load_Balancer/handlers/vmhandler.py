@@ -4,7 +4,8 @@ from googleapiclient.discovery import build
 
 dict_of_vms = {}
 
-def start_vm(vm_model):
+
+def start_vm(instance):
     """"Starts the VM based on the model given
         args vm_model:
         project: vm project location
@@ -12,29 +13,21 @@ def start_vm(vm_model):
         instance: name of the instance
         ip: can be null
     """
-    
+
     credentials = GoogleCredentials.get_application_default()
     compute = build('compute', 'v1', credentials=credentials)
 
     # r = compute.instances().reset
     try:
-        compute.instances().start(project=vm_model.project,
-                                  zone=vm_model.zone,
-                                  instance=vm_model.instance).execute()
-
-        data = compute.instances().get(project=vm_model.project,
-                                       zone=vm_model.zone,
-                                       instance=vm_model.instance).execute()
+        compute.instances().start(project='upbeat-medley-184111',
+                                  zone='us-central1-f',
+                                  instance=instance).execute()
     except Exception as e:
         raise e
     print('It worked!')
-    vm_model.ip = (data.get('networkInterfaces')[0]
-                       .get('accessConfigs')[0]
-                       .get('natIP'))
-    print(vm_model.ip)
 
 
-def reset_vm(vm_model):
+def reset_vm(instance):
     """"Starts the VM based on the model given
         args vm_model:
         project: vm project location
@@ -42,27 +35,18 @@ def reset_vm(vm_model):
         instance: name of the instance
         ip: can be null
     """
-    
+
     credentials = GoogleCredentials.get_application_default()
     compute = build('compute', 'v1', credentials=credentials)
 
     try:
-        compute.instances().restart(project=vm_model.project,
-                                  zone=vm_model.zone,
-                                  instance=vm_model.instance).execute()
-
-        data = compute.instances().get(project=vm_model.project,
-                                       zone=vm_model.zone,
-                                       instance=vm_model.instance).execute()
-
+        compute.instances().restart(project='upbeat-medley-184111',
+                                    zone='us-central1-f',
+                                    instance=instance).execute()
     except Exception as e:
         raise e
-        
+
     print('It worked!')
-    vm_model.ip = (data.get('networkInterfaces')[0]
-                       .get('accessConfigs')[0]
-                       .get('natIP'))
-    print(vm_model.ip)
 
 
 def stop_vm(instance):
@@ -87,6 +71,7 @@ def stop_vm(instance):
             raise e
     except Exception as ex:
         return ex
+
 
 def get_vm_data(project, zone):
     """Populates dict of vm based on project and zone.
@@ -119,6 +104,7 @@ def get_vm_data(project, zone):
     except Exception as e:
         raise e
     pass
+
 
 def get_dict():
     """Returns dict of ips.
